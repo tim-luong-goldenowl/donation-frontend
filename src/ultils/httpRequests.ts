@@ -14,7 +14,7 @@ const axiosRequest = axios.create({
   }]
 })
 
-export async function getRequest(path = "", headers = {}) {
+export async function getRequeast(path = "", headers = {}) {
   try {
     const response = await axiosRequest({
       url: path,
@@ -44,5 +44,21 @@ export async function postRequest(path = "", data: any, headers: any = {}) {
     if (err.response) {
       return Promise.reject(err.response)
     }
+  }
+}
+
+export async function getRequest(path = "", headers: any = {}) {
+  const response = await fetch(rootPath + path, {
+    method: "GET",
+    credentials: "include",
+    headers: {...headers,
+      "Content-Type": "application/json"
+    },
+  });
+
+  if (response?.ok) {
+    return response.json();
+  } else {
+    return Promise.reject("Invalid response");
   }
 }

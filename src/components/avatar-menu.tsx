@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import Image from 'next/image'
 
@@ -7,6 +7,8 @@ function classNames(...classes) {
 }
 
 export default function AvatarMenu() {
+  useEffect(() => {
+  }, [])
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
