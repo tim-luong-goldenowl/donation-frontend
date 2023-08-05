@@ -1,0 +1,57 @@
+.donationReceiverPage {
+  height: 100%;
+  position: relative;
+
+  .coverImage {
+    height: 40%;
+    position: relative;
+  }
+
+  .profileCard {
+    position: absolute;
+    background-color: white;
+    border-radius: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+
+    .avatarImage {
+      position: relative;
+
+      img {
+        border-radius: 50%;
+        width: 100px !important;
+        height: 100px !important;
+        left: 45% !important;
+        top: -50px !important;
+      }
+    }
+
+    .donationInfor {
+      display: flex;
+      width: 30%;
+      justify-content: space-evenly;
+      margin-top: 20px;
+      float: left;
+
+      .donationInforElement {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .text {
+          opacity: 0.5;
+        }
+      }
+    }
+
+    .donateButton {
+      margin-top: 20px;
+      float: right;
+      width: 20%;
+    }
+  }
+}

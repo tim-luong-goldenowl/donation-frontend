@@ -1,12 +1,5 @@
 .donationReceiverlist {
     display: flex;
-    .donationCard {
-        height: 200px;
-        a {
-            background-color: red;
-            img {
-                object-fit: cover;
-            }
-        }
-    }
+    justify-content: space-evenly;
+    padding-top: 30px;
 }

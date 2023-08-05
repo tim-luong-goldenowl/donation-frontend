@@ -1,6 +1,7 @@
 import { Fragment, useEffect } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -13,7 +14,7 @@ export default function AvatarMenu() {
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-gray-300">
-            <Image className="w-8 h-8 rounded-full" src="/default-avatar.jpg" alt="user photo" width={40} height={40} />
+          <Image className="w-8 h-8 rounded-full" src="/default-avatar.jpg" alt="user photo" width={40} height={40} />
         </Menu.Button>
       </div>
 
@@ -30,15 +31,15 @@ export default function AvatarMenu() {
           <div className="py-1">
             <Menu.Item>
               {({ active }) => (
-                <a
-                  href="#"
+                <Link
+                  href='/users/profile'
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm'
                   )}
                 >
-                  Account settings
-                </a>
+                  My Profile
+                </Link>
               )}
             </Menu.Item>
             <form method="POST" action="#">
