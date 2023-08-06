@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { Button, Card, Label, Tabs, TextInput, Toast } from "flowbite-react"
+import { Button, Card, FileInput, Label, Tabs, TextInput, Toast } from "flowbite-react"
 import { HiUserCircle, HiFire } from 'react-icons/hi'
 import styles from './page.module.scss'
 import { HiPencilAlt } from 'react-icons/hi'
@@ -27,6 +27,7 @@ export default function Page() {
   const [showToast, setShowToast] = useState(false)
   const [updatStatus, setUpdatedStatus] = useState(false)
   const [showDobPicker, setShowDobPicker] = useState(false)
+  const [avatar, setAvatar] = useState(undefined)
 
   const setUserData = (user: UserType) => {
     setUser(user)
@@ -61,16 +62,23 @@ export default function Page() {
     setDisableEdit(!disableEdit)
   }
 
+
+
   const handleSubmit = () => {
     const data: UserType = {
       firstName,
       lastName,
       dob,
       email: user.email,
-      id: user.id
+      id: user.id,
+      avatar
     }
 
-    putRequest('/users/update-profile', JSON.stringify(data))
+    let formData = new FormData();
+    formData.append('name', 'John');
+    formData.append('password', 'John123');
+
+    putRequest('/users/update-profile', JSON.stringify(formData))
       .then((res) => {
         setUserData(res)
         setShowToast(true)
@@ -82,6 +90,7 @@ export default function Page() {
         setUpdatedStatus(false)
       })
   }
+
 
   return (
     <Tabs.Group
@@ -165,6 +174,18 @@ export default function Page() {
               <div>
                 {showDobPicker && <DatePickerComponent title="Date of Birth" defaultDate={dob ? new Date(dob) : new Date("1950-01-01")} isDisabled={disableEdit} setValue={setDob} />}
               </div>
+
+              <div>
+                <FileInput
+                  helperText="A profile picture is useful to confirm your are logged into your account"
+                  id="file"
+                  onChange={(e) => setAvatar(e.target.files[0])}
+                />
+              </div>
+
+              <Button type="submit">
+                Submit
+              </Button>
             </form>
           </Card>
         </div>
