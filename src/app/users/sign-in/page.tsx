@@ -4,7 +4,7 @@ import { postRequest } from '@/ultils/httpRequests';
 import { useRouter } from 'next/navigation';
 import { SyntheticEvent, useState } from 'react';
 
-export default function Register() {
+export default function Page() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const router = useRouter();

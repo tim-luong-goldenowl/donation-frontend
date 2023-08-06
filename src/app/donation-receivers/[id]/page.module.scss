@@ -1,57 +1,45 @@
 .donationReceiverPage {
-  height: 100%;
-  position: relative;
+  display: flex;
+  
+  .leftContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    background-color: #F8FAFC;
 
-  .coverImage {
-    height: 40%;
-    position: relative;
-  }
-
-  .profileCard {
-    position: absolute;
-    background-color: white;
-    border-radius: 10px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    height: 80%;
-
+    button {
+      width: 200px;
+      margin-top: 50px;
+    }
     .avatarImage {
-      position: relative;
+      display: flex;
+      justify-content: center;
+      margin-top: 50px;
 
       img {
-        border-radius: 50%;
-        width: 100px !important;
-        height: 100px !important;
-        left: 45% !important;
-        top: -50px !important;
+        width: 70%;
       }
     }
 
-    .donationInfor {
+    .companyName {
       display: flex;
-      width: 30%;
-      justify-content: space-evenly;
-      margin-top: 20px;
-      float: left;
+      justify-content: center;
+      margin-top: 30px;
+    }
 
-      .donationInforElement {
+    .socialMedia {
+      .socialMediaMember {
         display: flex;
-        flex-direction: column;
-        align-items: center;
         justify-content: center;
-
-        .text {
-          opacity: 0.5;
-        }
       }
     }
+  }
 
-    .donateButton {
-      margin-top: 20px;
-      float: right;
-      width: 20%;
-    }
+  .rightContent {
+    flex: 4;
+    padding: 20px;
+    background-color: white;
   }
 }

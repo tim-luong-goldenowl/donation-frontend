@@ -32,16 +32,17 @@ export default function AvatarMenu() {
             <Menu.Item>
               {({ active }) => (
                 <Link
-                  href='/users/profile'
+                  href='/users/settings'
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm'
                   )}
                 >
-                  My Profile
+                  Account Settings
                 </Link>
               )}
             </Menu.Item>
+
             <form method="POST" action="#">
               <Menu.Item>
                 {({ active }) => (
@@ -56,6 +57,7 @@ export default function AvatarMenu() {
                   </button>
                 )}
               </Menu.Item>
+              
             </form>
           </div>
         </Menu.Items>
