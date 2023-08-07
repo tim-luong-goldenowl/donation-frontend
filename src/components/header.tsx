@@ -5,7 +5,7 @@ import AvatarMenu from './avatar-menu'
 
 export default function Header() {
     return (
-        <nav className="bg-gray-500 border-gray-500 dark:bg-gray-900">
+        <nav className="bg-black border-gray-500 dark:bg-gray-900">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <a className="flex items-center" onClick={() => console.log("@@")}>
                     <img src="https://flowbite.com/docs/images/logo.svg" className="h-8 mr-3" alt="Flowbite Logo" />

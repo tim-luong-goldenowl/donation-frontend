@@ -39,8 +39,7 @@ export async function putRequest(path = "", data: any, headers: any = {}) {
     method: "PUT",
     credentials: "include",
     body: data,
-    headers: {...headers,
-      "Content-Type": "application/json"
+    headers: {...headers
     },
   });
 

@@ -2,15 +2,11 @@
 .donationReceiverTab {
     padding: 20px;
 
-    .editButtonGroup {
+    .editButtonGroup, .submitButtonGroup {
         display: flex;
         justify-content: end;
         margin-bottom: 20px;
         margin-top: 20px;
-
-        .submitButton {
-            margin-right: 20px;
-        }
     }
 }
 

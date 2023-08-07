@@ -8,9 +8,10 @@ export default function DatePickerComponent(props: any) {
         title,
         defaultDate,
         isDisabled,
-        setValue
+        setValue,
+        formRegister
     } = props
-    
+
     const [show, setShow] = useState(false)
 
     const options = {
@@ -44,7 +45,7 @@ export default function DatePickerComponent(props: any) {
     const handleChange = (selectedDate: Date) => {
         setValue(selectedDate)
     }
-    
+
     const handleClose = (state: boolean) => {
         if(!isDisabled) {
             setShow(state)
