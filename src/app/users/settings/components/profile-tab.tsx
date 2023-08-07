@@ -9,12 +9,13 @@ import styles from '../page.module.scss'
 import { putRequest } from '@/ultils/httpRequests';
 import { UserType } from '@/types';
 import DatePickerComponent from '@/app/donation-receivers/components/date-picker';
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm, SubmitHandler, Controller } from "react-hook-form"
 
 type Inputs = {
   firstName: string
   lastName: string
   avatar: string
+  dob: Date
 }
 
 export default function ProfileTab(props: any) {
@@ -29,6 +30,9 @@ export default function ProfileTab(props: any) {
   const {
     register,
     handleSubmit,
+    reset,
+    setValue,
+    control,
     formState: { errors },
   } = useForm<Inputs>()
 
@@ -44,17 +48,17 @@ export default function ProfileTab(props: any) {
       }
     }
 
-    // putRequest('/users/update-profile', formData)
-    //   .then((res) => {
-    //     setUserData(res)
-    //     setShowToast(true)
-    //     setUpdatedStatus(true)
-    //   })
-    //   .catch((e) => {
-    //     console.log(e)
-    //     setShowToast(true)
-    //     setUpdatedStatus(false)
-    //   })
+    putRequest('/users/update-profile', formData)
+      .then((res) => {
+        setUserData(res)
+        setShowToast(true)
+        setUpdatedStatus(true)
+      })
+      .catch((e) => {
+        console.log(e)
+        setShowToast(true)
+        setUpdatedStatus(false)
+      })
   }
 
   const [user, setUser] = useState<UserType>({})
@@ -68,10 +72,7 @@ export default function ProfileTab(props: any) {
   const [avatar, setAvatar] = useState(undefined)
 
   const setUserData = (user: UserType) => {
-    setFirstName(user.firstName || '')
-    setLastName(user.lastName || '')
-    setDob(user.dob)
-    setEmail(user.email || '')
+    reset(user)
   }
 
   useEffect(() => {
@@ -114,8 +115,7 @@ export default function ProfileTab(props: any) {
               placeholder="name@gmail.com"
               disabled
               type="email"
-
-              value={email}
+              value={userProfile.email}
             />
           </div>
           <div>
@@ -129,8 +129,8 @@ export default function ProfileTab(props: any) {
               id="first-name"
               placeholder="First Name"
               disabled={disableEdit}
-              {...(register('firstName'), { required: true })}
-              defaultValue={userProfile.lastName}
+              {...register('firstName')}
+              defaultValue={userProfile.firstName}
             />
           </div>
 
@@ -146,18 +146,24 @@ export default function ProfileTab(props: any) {
               placeholder="Last Name"
               disabled={disableEdit}
               {...register('lastName')}
-              defaultValue={lastName}
+              defaultValue={userProfile.lastName}
             />
           </div>
 
           <div>
             {showDobPickerStatus && (
-              <>
-                <Label
-                  value="Date of Birth"
-                />
-                <DatePickerComponent title="Date of Birth" defaultDate={dob ? new Date(dob) : new Date("1950-01-01")} isDisabled={disableEdit} setValue={setDob} />
-              </>
+              <Controller
+                control={control}
+                name="dob"
+                render={({ field: { onChange, onBlur, value, ref } }) => (
+                  <>
+                    <Label
+                      value="Date of Birth"
+                    />
+                    <DatePickerComponent onChange={onChange} title="Date of Birth" defaultDate={userProfile.dob ? new Date(userProfile.dob) : new Date("1950-01-01")} isDisabled={disableEdit} setValue={setValue} register={register} />
+                  </>
+                )}
+              />
             )}
 
           </div>
@@ -166,7 +172,6 @@ export default function ProfileTab(props: any) {
             <FileInput
               helperText="A profile picture is useful to confirm your are logged into your account"
               id="file"
-              onChange={(e) => setAvatar(e.target.files[0])}
               {...register('avatar')}
             />
           </div>

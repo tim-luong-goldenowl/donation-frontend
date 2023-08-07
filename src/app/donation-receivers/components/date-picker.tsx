@@ -9,7 +9,8 @@ export default function DatePickerComponent(props: any) {
         defaultDate,
         isDisabled,
         setValue,
-        formRegister
+        register,
+        onChange
     } = props
 
     const [show, setShow] = useState(false)
@@ -43,7 +44,7 @@ export default function DatePickerComponent(props: any) {
     }
 
     const handleChange = (selectedDate: Date) => {
-        setValue(selectedDate)
+        setValue('dob', selectedDate)
     }
 
     const handleClose = (state: boolean) => {
@@ -56,7 +57,7 @@ export default function DatePickerComponent(props: any) {
 
     return (
         <div>
-            <Datepicker disabled options={options} onChange={handleChange} show={show} setShow={handleClose} />
+            <Datepicker disabled options={options} onChange={onChange} show={show} setShow={handleClose}/>
         </div>
     )
 }
