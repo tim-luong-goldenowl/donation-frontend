@@ -4,7 +4,7 @@ export type UserType = {
     lastName?: string
     email?: string
     dob?: Date
-    avatar?: string
+    avatarUrl?: string
 }
 
 export type DonationReceiverType = {

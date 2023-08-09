@@ -10,6 +10,7 @@ import { putRequest } from '@/ultils/httpRequests';
 import { UserType } from '@/types';
 import DatePickerComponent from '@/app/donation-receivers/components/date-picker';
 import { useForm, SubmitHandler, Controller } from "react-hook-form"
+import Image from 'next/image'
 
 type Inputs = {
   firstName: string
@@ -51,6 +52,7 @@ export default function ProfileTab(props: any) {
     putRequest('/users/update-profile', formData)
       .then((res) => {
         setUserData(res)
+        setAvatarUrl(res.avatarUrl)
         setShowToast(true)
         setUpdatedStatus(true)
       })
@@ -64,9 +66,11 @@ export default function ProfileTab(props: any) {
   const [disableEdit, setDisableEdit] = useState(true)
   const [showToast, setShowToast] = useState(false)
   const [updatStatus, setUpdatedStatus] = useState(false)
+  const [avatarUrl, setAvatarUrl] = useState(userProfile.avatarUrl)
 
   const setUserData = (user: UserType) => {
     reset(user)
+    setAvatarUrl(user.avatarUrl)
   }
 
   useEffect(() => {
@@ -168,6 +172,10 @@ export default function ProfileTab(props: any) {
               id="file"
               {...register('avatar')}
             />
+          </div>
+
+          <div>
+            <Image key={Date.now()} src={avatarUrl || ''} alt='' width={400} height={400} />
           </div>
 
           {
