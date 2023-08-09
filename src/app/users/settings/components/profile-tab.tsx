@@ -61,15 +61,9 @@ export default function ProfileTab(props: any) {
       })
   }
 
-  const [user, setUser] = useState<UserType>({})
-  const [disableEdit, setDisableEdit] = useState(false)
-  const [firstName, setFirstName] = useState(userProfile.firstName)
-  const [email, setEmail] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [dob, setDob] = useState(userProfile.dob)
+  const [disableEdit, setDisableEdit] = useState(true)
   const [showToast, setShowToast] = useState(false)
   const [updatStatus, setUpdatedStatus] = useState(false)
-  const [avatar, setAvatar] = useState(undefined)
 
   const setUserData = (user: UserType) => {
     reset(user)
