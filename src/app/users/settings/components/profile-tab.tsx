@@ -8,9 +8,9 @@ import { HiPencilAlt } from 'react-icons/hi'
 import styles from '../page.module.scss'
 import { putRequest } from '@/ultils/httpRequests';
 import { UserType } from '@/types';
-import DatePickerComponent from '@/app/donation-receivers/components/date-picker';
 import { useForm, SubmitHandler, Controller } from "react-hook-form"
 import Image from 'next/image'
+import DatePickerComponent from '@/components/date-picker';
 
 type Inputs = {
   firstName: string
