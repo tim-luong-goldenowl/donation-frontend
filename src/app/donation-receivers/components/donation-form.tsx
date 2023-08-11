@@ -15,6 +15,17 @@ type DonationFormProps = {
     donationReceiverId: number
 }
 
+type Donation = {
+    id: number
+    message: string
+    value: number
+}
+
+type CreateDonationType = {
+    donation: Donation
+    clientSecret: string
+}
+
 
 export default function DonationForm(props: DonationFormProps) {
     const {
@@ -33,7 +44,7 @@ export default function DonationForm(props: DonationFormProps) {
             donationReceiverId
         }
         postRequest('/donation', JSON.stringify(requestData))
-            .then((res) => {
+            .then((res: CreateDonationType) => {
                 console.log("@@@@@@@@@@res", res)
             })
             .catch((e) => {

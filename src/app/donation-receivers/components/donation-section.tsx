@@ -12,13 +12,11 @@ type DonationSectionProps = {
     donationReceiverId: number
 }
 
-const stripePromise = loadStripe('pk_test_51IdVtGDy6vw8nRPsYZtNOku1t5YBXEYcoarTSQD7gOrDWIeCSTHS7nfNU3gMKzE8yBCPwSUiQ2Nz85aKdGrThIuI00Vbxuo4pr');
-
 export default function DonationSection(props: DonationSectionProps) {
     const {
         donationReceiverId
     } = props
-    
+
     const [showDonationForm, setShowDonationForm] = useState(false)
 
     return (

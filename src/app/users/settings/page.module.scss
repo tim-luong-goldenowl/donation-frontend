@@ -25,3 +25,20 @@
         }
     }
 }
+
+.creditCardTab {
+    display: flex;
+    justify-content: center;
+
+    form {
+        width: 50%;
+
+        .stripeElementInput {
+            background-color: #F5F5F5;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px #9ACEDB solid;
+        }
+    }
+
+}

@@ -9,6 +9,8 @@ import { useRouter } from 'next/navigation'
 import DonationReceiverTab from './components/donation-receiver-tab'
 import { UserType, DonationReceiverType } from '@/types'
 import ProfileTab from './components/profile-tab'
+import CreditCardTab from "./components/credit-card-tab"
+import StripeElementsWrapper from "./components/stripe-element-wrapper"
 
 export default function Page() {
   const router = useRouter();
@@ -36,11 +38,18 @@ export default function Page() {
     >
       <Tabs.Item
         active
+        title="Credit Card Information"
+      >
+        <div className={styles.creditCardTab}>
+          <StripeElementsWrapper />
+        </div>
+      </Tabs.Item>
+      <Tabs.Item
         icon={HiUserCircle}
         title="Profile"
 
       >
-       <ProfileTab userProfile={user} styles={styles} showDobPickerStatus={showDobPicker}/>
+        <ProfileTab userProfile={user} styles={styles} showDobPickerStatus={showDobPicker} />
       </Tabs.Item>
       <Tabs.Item
         title="Donation Profile"
@@ -49,6 +58,8 @@ export default function Page() {
           <DonationReceiverTab donationReceiver={donationReceiver} styles={styles} />
         </div>
       </Tabs.Item>
+
     </Tabs.Group>
   )
 }
+

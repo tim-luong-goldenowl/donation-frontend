@@ -135,7 +135,6 @@ export default function DonationReceiverTab(props: any) {
                             id="email"
                             placeholder="Business Email"
                             disabled={disableEdit}
-                            onChange={({ target }) => { setEmail(target.value) }}
                             value={email}
                         />
                     </div>
