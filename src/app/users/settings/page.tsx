@@ -3,7 +3,7 @@
 import { Tabs } from "flowbite-react"
 import { HiUserCircle, HiFire } from 'react-icons/hi'
 import styles from './page.module.scss'
-import { useEffect, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import { getRequest, putRequest } from '@/ultils/httpRequests'
 import { useRouter } from 'next/navigation'
 import DonationReceiverTab from './components/donation-receiver-tab'
@@ -41,7 +41,7 @@ export default function Page() {
         title="Credit Card Information"
       >
         <div className={styles.creditCardTab}>
-          <StripeElementsWrapper />
+          <StripeElementsWrapper user={user}/>
         </div>
       </Tabs.Item>
       <Tabs.Item

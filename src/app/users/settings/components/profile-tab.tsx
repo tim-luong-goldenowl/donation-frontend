@@ -175,7 +175,11 @@ export default function ProfileTab(props: any) {
           </div>
 
           <div>
-            <Image key={Date.now()} src={avatarUrl || ''} alt='' width={400} height={400} />
+            {
+              avatarUrl && (
+                <Image key={Date.now()} src={avatarUrl} alt='' width={400} height={400} />
+              )
+            }
           </div>
 
           {

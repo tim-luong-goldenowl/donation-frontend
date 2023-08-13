@@ -2,7 +2,6 @@
 
 import { postRequest } from "@/ultils/httpRequests"
 import { Button, Card, Label, TextInput } from "flowbite-react"
-import { useState } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { HiFire } from 'react-icons/hi'
 
@@ -12,7 +11,10 @@ type Inputs = {
 }
 
 type DonationFormProps = {
-    donationReceiverId: number
+    donationReceiverId?: number
+    setDonationCount: Function
+    handleShowDonationAlert: Function
+    toggleDonationForm: Function
 }
 
 type Donation = {
@@ -22,8 +24,8 @@ type Donation = {
 }
 
 type CreateDonationType = {
-    donation: Donation
-    clientSecret: string
+    donation: Donation,
+    donationCount: number
 }
 
 
@@ -35,17 +37,29 @@ export default function DonationForm(props: DonationFormProps) {
     } = useForm<Inputs>()
 
     const {
-        donationReceiverId
+        donationReceiverId,
+        setDonationCount,
+        handleShowDonationAlert,
+        toggleDonationForm
     } = props
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         const requestData = {
             ...data,
+            value: parseInt(data.value.toString()),
             donationReceiverId
         }
+
+
         postRequest('/donation', JSON.stringify(requestData))
-            .then((res: CreateDonationType) => {
-                console.log("@@@@@@@@@@res", res)
+            .then(({ success, data }: {success: boolean, data: CreateDonationType}) => {
+                if(success) {
+                    setDonationCount(data.donationCount)
+                    toggleDonationForm(false)
+                    handleShowDonationAlert(true)
+                } else {
+                    handleShowDonationAlert(false)
+                }
             })
             .catch((e) => {
                 console.log(e)
@@ -84,10 +98,14 @@ export default function DonationForm(props: DonationFormProps) {
                     />
                 </div>
 
-            <Button type='submit' gradientDuoTone="pinkToOrange">
-                <HiFire className="mr-2 h-5 w-5" />
-                Donate!
-            </Button>
+                <Button type='submit' gradientDuoTone="greenToBlue">
+                    <HiFire className="mr-2 h-5 w-5" />
+                    Donate!
+                </Button>
+                <Button onClick={() => {toggleDonationForm(false)}} gradientDuoTone="pinkToOrange">
+                    <HiFire className="mr-2 h-5 w-5" />
+                    Cancel!
+                </Button>
             </form>
         </Card>
     );

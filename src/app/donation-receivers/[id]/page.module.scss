@@ -1,6 +1,7 @@
 .donationReceiverPage {
   display: flex;
-  
+  height: 100%;
+
   .leftContent {
     flex: 1;
     display: flex;
@@ -9,11 +10,12 @@
     justify-content: start;
     background-color: #F8FAFC;
     padding: 20px;
-
+    max-width: 400px;
+    min-width: 400px;
     button {
       width: 200px;
-      margin-top: 50px;
     }
+
     .avatarImage {
       display: flex;
       justify-content: center;
@@ -37,6 +39,17 @@
       }
     }
 
+    .donationCountSection {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      .donationCountText {
+        opacity: 0.5;
+      }
+    }
+
     .donationForm {
       margin-top: 20px;
       width: 100%;
@@ -48,6 +61,11 @@
           width: 100%;
         }
       }
+    }
+    
+    .donationAlertMessageSection {
+      margin-top: 40px;
+      max-width: 350px;
     }
   }
 

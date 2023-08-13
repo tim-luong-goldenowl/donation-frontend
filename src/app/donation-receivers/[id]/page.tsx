@@ -39,7 +39,7 @@ export default async function Page({ params }: { params: { id: number } }) {
           </div>
         </div>
 
-        <DonationSection donationReceiverId={params.id}/>
+        <DonationSection donationReceiver={donationReceiver}/>
       </div>
 
       <div className={styles.rightContent}>

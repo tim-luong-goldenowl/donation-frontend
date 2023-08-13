@@ -5,6 +5,7 @@ export type UserType = {
     email?: string
     dob?: Date
     avatarUrl?: string
+    stripeCustomerId?: string
 }
 
 export type DonationReceiverType = {
@@ -15,4 +16,5 @@ export type DonationReceiverType = {
     country?: string
     verified?: boolean
     bio?: string
+    donationCount?: number
 }

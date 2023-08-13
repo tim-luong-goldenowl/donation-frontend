@@ -15,12 +15,17 @@ import { CardCvcElement, CardElement, CardExpiryElement, CardNumberElement, Elem
 import { loadStripe } from '@stripe/stripe-js';
 import CreditCardTab from './credit-card-tab';
 
+
+type Props = {
+  user: UserType
+}
+
 const stripePromise = loadStripe('pk_test_51IdVtGDy6vw8nRPsYZtNOku1t5YBXEYcoarTSQD7gOrDWIeCSTHS7nfNU3gMKzE8yBCPwSUiQ2Nz85aKdGrThIuI00Vbxuo4pr');
 
-export default function StripeElementsWrapper() {
+export default function StripeElementsWrapper(props: Props) {
   return (
     <Elements stripe={stripePromise} >
-      <CreditCardTab />
+      <CreditCardTab user={props.user}/>
     </Elements>
   )
 }
