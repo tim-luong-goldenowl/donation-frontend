@@ -1,15 +1,26 @@
+'use client'
+
 import { Fragment, useEffect } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { postRequest } from '@/ultils/httpRequests'
+import { useRouter } from 'next/navigation'
 
-function classNames(...classes) {
+function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function AvatarMenu() {
-  useEffect(() => {
-  }, [])
+  const router = useRouter();
+
+  const handleSignOut = () => {
+    postRequest('/auth/sign-out').then(() => {
+      router.refresh();
+      router.replace('/users/sign-in')
+    })
+  }
+
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -43,22 +54,20 @@ export default function AvatarMenu() {
               )}
             </Menu.Item>
 
-            <form method="POST" action="#">
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    type="submit"
-                    className={classNames(
-                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'block w-full px-4 py-2 text-left text-sm'
-                    )}
-                  >
-                    Sign out
-                  </button>
-                )}
-              </Menu.Item>
-              
-            </form>
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  onClick={handleSignOut}
+                  className={classNames(
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                    'block w-full px-4 py-2 text-left text-sm'
+                  )}
+                >
+                  Sign out
+                </button>
+              )}
+            </Menu.Item>
+
           </div>
         </Menu.Items>
       </Transition>

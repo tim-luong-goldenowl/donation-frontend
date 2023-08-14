@@ -16,8 +16,9 @@ export default function Page() {
             password,
         }
 
-        postRequest('/auth/signin', JSON.stringify(jsonBody))
+        postRequest('/auth/sign-in', JSON.stringify(jsonBody))
             .then(() => {
+                router.refresh()
                 router.push('/donation-receivers')
             })
             .catch((e) => {

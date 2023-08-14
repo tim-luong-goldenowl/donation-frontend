@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 import SuccessAlert from '@/components/success-alert'
 import FailureAlert from '@/components/failure-alert'
 import { Button, Card, FileInput, Label, TextInput } from 'flowbite-react';
-import { HiPencilAlt } from 'react-icons/hi'
+import { HiPencilAlt, HiFire } from 'react-icons/hi'
 import styles from '../page.module.scss'
-import { putRequest } from '@/ultils/httpRequests';
+import { postRequest, putRequest } from '@/ultils/httpRequests';
 import { UserType } from '@/types';
 import { useForm, SubmitHandler, Controller } from "react-hook-form"
 import Image from 'next/image'
@@ -23,9 +23,13 @@ export default function ProfileTab(props: any) {
   const {
     userProfile,
     showDobPickerStatus,
+    setDonationReceiver,
+    setHasDonationReceiver
   }: {
     userProfile: UserType,
-    showDobPickerStatus: boolean
+    showDobPickerStatus: boolean,
+    setDonationReceiver: Function,
+    setHasDonationReceiver: Function
   } = props
 
   const {
@@ -89,10 +93,22 @@ export default function ProfileTab(props: any) {
     setDisableEdit(!disableEdit)
   }
 
+  const handleBecomeDonationReceiver = () => {
+    postRequest('/donation-receivers/register').then((data) => {
+      console.log("@@@@@@@@@@@@@@@@@@@data", data)
+      setDonationReceiver(data)
+      setHasDonationReceiver(true)
+    })
+  }
+
   return (
     <div className={styles.userProfileTab}>
       {showToast && buildToastComponent()}
       <div className={styles.editButtonGroup}>
+        <Button onClick={handleBecomeDonationReceiver} gradientDuoTone="pinkToOrange">
+          <HiFire className="mr-2 h-5 w-5" />
+          Become a Donatio Receiver!
+        </Button>
         <Button gradientMonochrome="teal" onClick={handleEditButtonClick}>
           <HiPencilAlt className="mr-2 h-5 w-5" />
           {disableEdit ? 'Edit' : 'Cancel'}
@@ -167,11 +183,16 @@ export default function ProfileTab(props: any) {
           </div>
 
           <div>
-            <FileInput
-              helperText="A profile picture is useful to confirm your are logged into your account"
-              id="file"
-              {...register('avatar')}
-            />
+            {
+              !disableEdit && (
+                <FileInput
+                  helperText="A profile picture is useful to confirm your are logged into your account"
+                  id="file"
+                  {...register('avatar')}
+                />
+              )
+            }
+
           </div>
 
           <div>

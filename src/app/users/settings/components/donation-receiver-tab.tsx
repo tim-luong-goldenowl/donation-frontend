@@ -3,13 +3,24 @@
 import { useEffect, useState } from 'react';
 import SuccessAlert from '@/components/success-alert'
 import FailureAlert from '@/components/failure-alert'
-import { Badge, Button, Card, Label, TextInput } from 'flowbite-react';
-import { HiPencilAlt, HiCheckCircle, HiExclamationCircle } from 'react-icons/hi'
+import { Badge, Button, Card, FileInput, Label, TextInput } from 'flowbite-react';
+import { HiPencilAlt, HiFire, HiCheckCircle, HiExclamationCircle } from 'react-icons/hi'
 import styles from '../page.module.scss'
 import { putRequest } from '@/ultils/httpRequests';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { DonationReceiverType } from '@/types';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import Image from 'next/image'
+
+type Inputs = {
+    email: string
+    businessName: string
+    companyName: string
+    bio: string
+    country: string
+    avatar: string
+}
 
 export default function DonationReceiverTab(props: any) {
     const {
@@ -18,22 +29,27 @@ export default function DonationReceiverTab(props: any) {
         donationReceiver: DonationReceiverType
     } = props
 
+    const {
+        register,
+        handleSubmit,
+        reset,
+        setValue,
+        control,
+        formState: { errors },
+    } = useForm<Inputs>()
+
 
     const [showToast, setShowToast] = useState(false)
     const [updatStatus, setUpdatedStatus] = useState(false)
-    const [email, setEmail] = useState('')
     const [disableEdit, setDisableEdit] = useState(true)
-    const [businessName, setBusinessName] = useState('')
-    const [companyName, setCompanyName] = useState('')
-    const [country, setCountry] = useState('')
     const [bio, setBio] = useState('')
 
+    const [avatarUrl, setAvatarUrl] = useState(donationReceiver.avatarUrl)
+
     const setDonationReceiverData = (data: DonationReceiverType) => {
-        setEmail(data.email || '')
-        setCountry(data.country || '')
-        setCompanyName(data.companyName || '')
-        setBusinessName(data.businessName || '')
+        reset(data)
         setBio(data.bio || '')
+        setAvatarUrl(data.avatarUrl)
     }
 
     useEffect(() => {
@@ -48,17 +64,20 @@ export default function DonationReceiverTab(props: any) {
         }
     }
 
-    const handleSubmit = () => {
-        const data: DonationReceiverType = {
-            email,
-            id: donationReceiver.id,
-            country,
-            businessName,
-            companyName,
-            bio
+
+    const onSubmit: SubmitHandler<Inputs> = (data) => {
+        const formData = new FormData()
+
+        for (const key in data) {
+            if (key == 'avatar') {
+                formData.append(key, data[key][0])
+
+            } else {
+                formData.append(key, data[key])
+            }
         }
 
-        putRequest('/donation-receivers/update-profile', JSON.stringify(data))
+        putRequest('/donation-receivers/update-profile', formData)
             .then((res) => {
                 setDonationReceiverData(res)
                 setShowToast(true)
@@ -100,30 +119,35 @@ export default function DonationReceiverTab(props: any) {
         )
     }
 
+    const handleGetVeiried = () => {
+
+    }
+
 
     return (
         <>
             {showToast && buildToastComponent()}
-            <div className={styles.editButtonGroup}>
-                {
-                    !disableEdit && (
-                        <Button gradientMonochrome="teal" className={styles.submitButton} onClick={handleSubmit}>
-                            <HiPencilAlt className="mr-2 h-5 w-5" />
-                            Submit
-                        </Button>
-                    )
-                }
-
-                <Button gradientMonochrome="teal" onClick={handleEditButtonClick}>
-                    <HiPencilAlt className="mr-2 h-5 w-5" />
-                    {disableEdit ? 'Edit' : 'Cancel'}
-                </Button>
-            </div>
-
-
             <Card>
                 {statusBadge()}
-                <form className="flex flex-col gap-4">
+                <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+                    <div className={styles.editButtonGroup}>
+                        <Button onClick={() => {}} gradientDuoTone="pinkToOrange">
+                            <HiFire className="mr-2 h-5 w-5" />
+                            Get Verified!
+                        </Button>
+                        {
+                            !disableEdit && (
+                                <Button gradientMonochrome="teal" className={styles.submitButton} type='submit'>
+                                    <HiPencilAlt className="mr-2 h-5 w-5" />
+                                    Submit
+                                </Button>
+                            )
+                        }
+                        <Button gradientMonochrome="teal" onClick={handleEditButtonClick}>
+                            <HiPencilAlt className="mr-2 h-5 w-5" />
+                            {disableEdit ? 'Edit' : 'Cancel'}
+                        </Button>
+                    </div>
                     <div>
                         <div className="mb-2 block">
                             <Label
@@ -135,7 +159,8 @@ export default function DonationReceiverTab(props: any) {
                             id="email"
                             placeholder="Business Email"
                             disabled={disableEdit}
-                            value={email}
+                            {...register('email')}
+                            defaultValue={donationReceiver.email}
                         />
                     </div>
                     <div>
@@ -149,8 +174,8 @@ export default function DonationReceiverTab(props: any) {
                             id="businessName"
                             placeholder="Business Name"
                             disabled={disableEdit}
-                            onChange={({ target }) => { setBusinessName(target.value) }}
-                            value={businessName}
+                            {...register('businessName')}
+                            defaultValue={donationReceiver.businessName}
                         />
                     </div>
                     <div>
@@ -164,8 +189,8 @@ export default function DonationReceiverTab(props: any) {
                             id="companyName"
                             placeholder="Company Name"
                             disabled={disableEdit}
-                            onChange={({ target }) => { setCompanyName(target.value) }}
-                            value={companyName}
+                            {...register('companyName')}
+                            defaultValue={donationReceiver.companyName}
                         />
                     </div>
 
@@ -180,28 +205,45 @@ export default function DonationReceiverTab(props: any) {
                             id="country"
                             placeholder="Country"
                             disabled={disableEdit}
-                            onChange={({ target }) => { setCountry(target.value) }}
-                            value={country}
+                            {...register('country')}
+                            defaultValue={donationReceiver.country}
+                        />
+                    </div>
+
+                    {
+                        !disableEdit && (
+                            <FileInput
+                                helperText="A profile picture is useful to confirm your are logged into your account"
+                                id="file"
+                                {...register('avatar')}
+                            />
+                        )
+                    }
+
+                    <div>
+                        {
+                            avatarUrl && (
+                                <Image key={Date.now()} src={avatarUrl} alt='' width={400} height={400} />
+                            )
+                        }
+                    </div>
+                    <div>
+                        <div className="mb-2 block">
+                            <Label
+                                value="Bio"
+                            />
+                        </div>
+                        <CKEditor
+                            editor={ClassicEditor}
+                            disabled={disableEdit}
+                            data={bio}
+                            onChange={(event: any, editor: any) => {
+                                const data = editor.getData();
+                                setBio(data)
+                            }}
                         />
                     </div>
                 </form>
-
-                <div>
-                    <div className="mb-2 block">
-                        <Label
-                            value="Bio"
-                        />
-                    </div>
-                    <CKEditor
-                        editor={ClassicEditor}
-                        disabled={disableEdit}
-                        data={bio}
-                        onChange={(event: any, editor: any) => {
-                            const data = editor.getData();
-                            setBio(data)
-                        }}
-                    />
-                </div>
             </Card>
         </>
     )

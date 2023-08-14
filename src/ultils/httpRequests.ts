@@ -1,6 +1,6 @@
 const rootPath = 'http://localhost:3000'
 
-export async function postRequest(path = "", data: any, headers: any = {}) {
+export async function postRequest(path = "", data: any = JSON.stringify({}), headers: any = {}) {
   const response = await fetch(rootPath + path, {
     method: "POST",
     credentials: "include",

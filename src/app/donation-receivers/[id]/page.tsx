@@ -23,7 +23,11 @@ export default async function Page({ params }: { params: { id: number } }) {
     <div className={styles.donationReceiverPage}>
       <div className={styles.leftContent}>
         <div className={styles.avatarImage}>
-          <img className="h-auto max-w-full rounded-lg" src="/hinh.jpg" alt="image description"></img>
+          {
+            donationReceiver.avatarUrl && (
+              <Image key={Date.now()} src={donationReceiver.avatarUrl} alt='' width={400} height={400} />
+            )
+          }
         </div>
 
         <div className={styles.companyName}>

@@ -17,4 +17,5 @@ export type DonationReceiverType = {
     verified?: boolean
     bio?: string
     donationCount?: number
+    avatarUrl?: string
 }
