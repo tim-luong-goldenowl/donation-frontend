@@ -24,12 +24,14 @@ export default function ProfileTab(props: any) {
     userProfile,
     showDobPickerStatus,
     setDonationReceiver,
-    setHasDonationReceiver
+    setHasDonationReceiver,
+    hasDonationReceiver
   }: {
     userProfile: UserType,
     showDobPickerStatus: boolean,
     setDonationReceiver: Function,
-    setHasDonationReceiver: Function
+    setHasDonationReceiver: Function,
+    hasDonationReceiver: boolean
   } = props
 
   const {
@@ -95,7 +97,6 @@ export default function ProfileTab(props: any) {
 
   const handleBecomeDonationReceiver = () => {
     postRequest('/donation-receivers/register').then((data) => {
-      console.log("@@@@@@@@@@@@@@@@@@@data", data)
       setDonationReceiver(data)
       setHasDonationReceiver(true)
     })
@@ -105,10 +106,15 @@ export default function ProfileTab(props: any) {
     <div className={styles.userProfileTab}>
       {showToast && buildToastComponent()}
       <div className={styles.editButtonGroup}>
-        <Button onClick={handleBecomeDonationReceiver} gradientDuoTone="pinkToOrange">
-          <HiFire className="mr-2 h-5 w-5" />
-          Become a Donatio Receiver!
-        </Button>
+        {
+          !hasDonationReceiver && (
+            <Button onClick={handleBecomeDonationReceiver} gradientDuoTone="pinkToOrange">
+              <HiFire className="mr-2 h-5 w-5" />
+              Become a Donatio Receiver!
+            </Button>
+          )
+        }
+
         <Button gradientMonochrome="teal" onClick={handleEditButtonClick}>
           <HiPencilAlt className="mr-2 h-5 w-5" />
           {disableEdit ? 'Edit' : 'Cancel'}
@@ -198,7 +204,7 @@ export default function ProfileTab(props: any) {
           <div>
             {
               avatarUrl && (
-                <ImageComponent url={avatarUrl} width={400} height={400}/>
+                <ImageComponent url={avatarUrl} width={400} height={400} />
               )
             }
           </div>

@@ -1,6 +1,7 @@
 'use client'
 
 import { postRequest } from '@/ultils/httpRequests';
+import { useRouter } from 'next/navigation';
 import { SyntheticEvent, useState } from 'react';
 
 export default function SignUp() {
@@ -9,6 +10,8 @@ export default function SignUp() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const router = useRouter();
+    
     const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
         const jsonBody = {
@@ -19,7 +22,7 @@ export default function SignUp() {
         }
         const res = await postRequest('/auth/register', JSON.stringify(jsonBody))
             .then((data) => {
-                return data
+                router.push('/users/sign-in')
             })
             .catch((e) => {
             })
@@ -42,7 +45,7 @@ export default function SignUp() {
                     <div>
                         <label htmlFor="firstName" className="block text-sm font-medium leading-6 text-gray-900">First Name</label>
                         <div className="mt-2">
-                            <input id="firstName" name="fistName" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            <input id="firstName" name="fistName" type="text" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 onChange={(e) => setFirstName(e.target.value)}
                             />
                         </div>
@@ -51,7 +54,7 @@ export default function SignUp() {
                     <div>
                         <label htmlFor="lastName" className="block text-sm font-medium leading-6 text-gray-900">Last Name</label>
                         <div className="mt-2">
-                            <input id="lastName" name="lastName" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            <input id="lastName" name="lastName" type="text" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 onChange={(e) => setLastName(e.target.value)}
                             />
                         </div>

@@ -1,6 +1,7 @@
 'use client'
 
 import { postRequest } from '@/ultils/httpRequests';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { SyntheticEvent, useState } from 'react';
 
@@ -56,6 +57,9 @@ export default function Page() {
 
                     <div>
                         <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign In</button>
+                        <Link href={`/users/sign-up`} className='mt-2 block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500'>
+                            <button className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign Up</button>
+                        </Link>
                     </div>
                 </form>
             </div>

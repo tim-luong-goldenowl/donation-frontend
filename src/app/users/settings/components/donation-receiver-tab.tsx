@@ -6,7 +6,7 @@ import FailureAlert from '@/components/failure-alert'
 import { Badge, Button, Card, FileInput, Label, TextInput } from 'flowbite-react';
 import { HiPencilAlt, HiFire, HiCheckCircle, HiExclamationCircle } from 'react-icons/hi'
 import styles from '../page.module.scss'
-import { putRequest } from '@/ultils/httpRequests';
+import { postRequest, putRequest } from '@/ultils/httpRequests';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { DonationReceiverType } from '@/types';
@@ -42,7 +42,7 @@ export default function DonationReceiverTab(props: any) {
     const [showToast, setShowToast] = useState(false)
     const [updatStatus, setUpdatedStatus] = useState(false)
     const [disableEdit, setDisableEdit] = useState(true)
-    const [bio, setBio] = useState('')
+    const [bio, setBio] = useState(donationReceiver.bio)
 
     const [avatarUrl, setAvatarUrl] = useState(donationReceiver.avatarUrl)
 
@@ -68,8 +68,10 @@ export default function DonationReceiverTab(props: any) {
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         const formData = new FormData()
 
+        formData.append('bio', bio || '')
+
         for (const key in data) {
-            if (data[key] == null || data[key] == undefined) {
+            if (key == 'bio' || data[key] == null || data[key] == undefined) {
                 continue
             }
 
@@ -124,7 +126,12 @@ export default function DonationReceiverTab(props: any) {
     }
 
     const handleGetVeiried = () => {
-
+        const data = {
+            id: donationReceiver.id
+        }
+        postRequest('/donation-receivers/verify', JSON.stringify(data)).then(({ onboardingLink }) => {
+            window.open(onboardingLink)
+        })
     }
 
 
@@ -135,7 +142,7 @@ export default function DonationReceiverTab(props: any) {
                 {statusBadge()}
                 <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
                     <div className={styles.editButtonGroup}>
-                        <Button onClick={() => { }} gradientDuoTone="pinkToOrange">
+                        <Button onClick={handleGetVeiried} gradientDuoTone="pinkToOrange">
                             <HiFire className="mr-2 h-5 w-5" />
                             Get Verified!
                         </Button>

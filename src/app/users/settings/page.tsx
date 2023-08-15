@@ -45,7 +45,7 @@ export default function Page() {
         title="Profile"
 
       >
-        <ProfileTab setHasDonationReceiver={setHasDonationReceiver} setDonationReceiver={setDonationReceiver} userProfile={user} styles={styles} showDobPickerStatus={showDobPicker} />
+        <ProfileTab setHasDonationReceiver={setHasDonationReceiver} hasDonationReceiver={hasDonationReceiver} setDonationReceiver={setDonationReceiver} userProfile={user} styles={styles} showDobPickerStatus={showDobPicker} />
       </Tabs.Item>
       <Tabs.Item
         title="Donation Profile"
