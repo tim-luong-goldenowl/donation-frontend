@@ -36,7 +36,7 @@ export default function CreditCardTab(props: Props) {
   const elements = useElements();
 
   const [cardElement, setCardElement] = useState<StripeCardNumberElement>()
-  const [alreadyHaveCard, setAlreadyHaveCard] = useState<boolean>(true)
+  const [alreadyHaveCard, setAlreadyHaveCard] = useState<boolean>(false)
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
@@ -69,28 +69,6 @@ export default function CreditCardTab(props: Props) {
       placeholder: 'Card CVC',
     }).mount('#card-cvc')
   }, [stripe, alreadyHaveCard])
-
-  // const handleAddCardForm = () => {
-  //   if (!stripe || !elements || alreadyHaveCard) {
-  //     return
-  //   }
-
-  //   const cardNumberElement: StripeCardNumberElement = elements.create('cardNumber', {
-  //     placeholder: 'Input Your Card Number',
-  //   })
-
-  //   cardNumberElement.mount('#card-number')
-
-  //   setCardElement(cardNumberElement)
-
-  //   elements?.create("cardExpiry", {
-  //     placeholder: 'Card Expiry',
-  //   }).mount('#card-expiry')
-
-  //   elements?.create("cardCvc", {
-  //     placeholder: 'Card CVC',
-  //   }).mount('#card-cvc')
-  // }
 
   useEffect(() => {
     getRequest(`/stripe/get-payment-method/${user.stripeCustomerId}`).then(({ success, data }: { success: boolean, data: PaymentMethod }) => {

@@ -11,7 +11,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { DonationReceiverType } from '@/types';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import Image from 'next/image'
+import ImageComponent from '@/components/image-component';
 
 type Inputs = {
     email: string
@@ -69,6 +69,10 @@ export default function DonationReceiverTab(props: any) {
         const formData = new FormData()
 
         for (const key in data) {
+            if (data[key] == null || data[key] == undefined) {
+                continue
+            }
+
             if (key == 'avatar') {
                 formData.append(key, data[key][0])
 
@@ -131,7 +135,7 @@ export default function DonationReceiverTab(props: any) {
                 {statusBadge()}
                 <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
                     <div className={styles.editButtonGroup}>
-                        <Button onClick={() => {}} gradientDuoTone="pinkToOrange">
+                        <Button onClick={() => { }} gradientDuoTone="pinkToOrange">
                             <HiFire className="mr-2 h-5 w-5" />
                             Get Verified!
                         </Button>
@@ -223,7 +227,7 @@ export default function DonationReceiverTab(props: any) {
                     <div>
                         {
                             avatarUrl && (
-                                <Image key={Date.now()} src={avatarUrl} alt='' width={400} height={400} />
+                                <ImageComponent url={avatarUrl} width={400} height={400} />
                             )
                         }
                     </div>

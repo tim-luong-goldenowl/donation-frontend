@@ -9,8 +9,8 @@ import styles from '../page.module.scss'
 import { postRequest, putRequest } from '@/ultils/httpRequests';
 import { UserType } from '@/types';
 import { useForm, SubmitHandler, Controller } from "react-hook-form"
-import Image from 'next/image'
 import DatePickerComponent from '@/components/date-picker';
+import ImageComponent from '@/components/image-component';
 
 type Inputs = {
   firstName: string
@@ -198,7 +198,7 @@ export default function ProfileTab(props: any) {
           <div>
             {
               avatarUrl && (
-                <Image key={Date.now()} src={avatarUrl} alt='' width={400} height={400} />
+                <ImageComponent url={avatarUrl} width={400} height={400}/>
               )
             }
           </div>
