@@ -142,10 +142,14 @@ export default function DonationReceiverTab(props: any) {
                 {statusBadge()}
                 <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
                     <div className={styles.editButtonGroup}>
-                        <Button onClick={handleGetVeiried} gradientDuoTone="pinkToOrange">
-                            <HiFire className="mr-2 h-5 w-5" />
-                            Get Verified!
-                        </Button>
+                        {
+                            !donationReceiver.verified && (
+                                <Button onClick={handleGetVeiried} gradientDuoTone="pinkToOrange">
+                                    <HiFire className="mr-2 h-5 w-5" />
+                                    Get Verified!
+                                </Button>
+                            )
+                        }
                         {
                             !disableEdit && (
                                 <Button gradientMonochrome="teal" className={styles.submitButton} type='submit'>

@@ -4,8 +4,9 @@ import { cookies } from 'next/headers'
 import styles from './page.module.scss'
 import { redirect } from 'next/navigation'
 import { DonationReceiverType } from '@/types'
+import Image from 'next/image'
 
-const Index = async () => {
+const Page = async () => {
   const cookieStore = cookies()
 
   const donationReceiverList = await getRequest('/donation-receivers', {
@@ -22,11 +23,12 @@ const Index = async () => {
         <div className={styles.donationReceiverlist}>
           {donationReceiverList.map((el: DonationReceiverType) => (
             <div className={`${styles.donationCard} ` + "max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"}>
-              <img className="rounded-t-lg" src="/hinh.jpg" alt="" />
+              {
+                el.avatarUrl && <Image alt='' src={el.avatarUrl} width={390} height={300} />
+              }
+
               <div className="p-5">
-                <a href="#">
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{el.businessName}</h5>
-                </a>
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{el.businessName}</h5>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
                 <Link href={`/donation-receivers/${el.id}`} className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                   Explore More
@@ -43,4 +45,4 @@ const Index = async () => {
   }
 }
 
-export default Index;
+export default Page;
