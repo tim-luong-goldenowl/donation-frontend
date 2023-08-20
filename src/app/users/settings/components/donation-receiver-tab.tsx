@@ -33,13 +33,12 @@ export default function DonationReceiverTab(props: any) {
         register,
         handleSubmit,
         reset,
-        setValue,
-        control,
         formState: { errors },
     } = useForm<Inputs>()
 
 
     const [showToast, setShowToast] = useState(false)
+    const [showSendMailToast, setShowSendMailToast] = useState(false)
     const [updatStatus, setUpdatedStatus] = useState(false)
     const [disableEdit, setDisableEdit] = useState(true)
     const [bio, setBio] = useState(donationReceiver.bio)
@@ -60,8 +59,12 @@ export default function DonationReceiverTab(props: any) {
         if (updatStatus) {
             return <SuccessAlert text='Updated Successfully' setShowToast={setShowToast} />
         } else {
-            return <FailureAlert text='Updat Failed' setShowToast={setShowToast} />
+            return <FailureAlert text='Updated Failed' setShowToast={setShowToast} />
         }
+    }
+
+    const buildSendMailToastComponent = () => {
+        return <SuccessAlert text='The onboarding link has been sent to your email account, please check it!' setShowToast={setShowToast} />
     }
 
 
@@ -86,11 +89,12 @@ export default function DonationReceiverTab(props: any) {
         putRequest('/donation-receivers/update-profile', formData)
             .then((res) => {
                 setDonationReceiverData(res)
+                setShowSendMailToast(false)
                 setShowToast(true)
                 setUpdatedStatus(true)
             })
             .catch((e) => {
-                console.log(e)
+                setShowSendMailToast(false)
                 setShowToast(true)
                 setUpdatedStatus(false)
             })
@@ -129,15 +133,16 @@ export default function DonationReceiverTab(props: any) {
         const data = {
             id: donationReceiver.id
         }
-        postRequest('/donation-receivers/verify', JSON.stringify(data)).then(({ onboardingLink }) => {
-            window.open(onboardingLink)
+        postRequest('/donation-receivers/verify', JSON.stringify(data)).then(() => {
+            setShowToast(false)
+            setShowSendMailToast(true)
         })
     }
-
 
     return (
         <>
             {showToast && buildToastComponent()}
+            {showSendMailToast && buildSendMailToastComponent()}
             <Card>
                 {statusBadge()}
                 <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>

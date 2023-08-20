@@ -10,10 +10,12 @@ import DonationSection from '../components/donation-section'
 
 export default async function Page({ params }: { params: { id: number } }) {
   const cookieStore = cookies()
+  let canMakeDonation = false
 
   const donationReceiver = await getRequest(`/donation-receivers/${params.id}`, {
     Cookie: cookieStore
-  }).then(({ data }: { data: DonationReceiverType }) => {
+  }).then(({ data, canMakeDonate }: { data: DonationReceiverType, canMakeDonate: boolean }) => {
+    canMakeDonation = canMakeDonate
     return data
   }).catch((e) => {
     redirect('/users/sign-in')
@@ -43,7 +45,13 @@ export default async function Page({ params }: { params: { id: number } }) {
           </div>
         </div>
 
-        <DonationSection donationReceiver={donationReceiver}/>
+        {
+          canMakeDonation && (
+            <DonationSection donationReceiver={donationReceiver} />
+
+          )
+        }
+
       </div>
 
       <div className={styles.rightContent}>
