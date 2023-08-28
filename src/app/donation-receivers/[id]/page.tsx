@@ -8,7 +8,7 @@ import ReactHtmlParser from 'react-html-parser'
 import { HiMail } from 'react-icons/hi'
 import DonationSection from '../components/donation-section'
 
-export default async function Page({ params }: { params: { id: number } }) {
+export default async function Page({ params }: { params: { id: string } }) {
   const cookieStore = cookies()
   let canMakeDonation = false
 
@@ -48,7 +48,6 @@ export default async function Page({ params }: { params: { id: number } }) {
         {
           canMakeDonation && (
             <DonationSection donationReceiver={donationReceiver} />
-
           )
         }
 

@@ -12,7 +12,7 @@ type Inputs = {
 }
 
 type DonationFormProps = {
-    donationReceiverId?: number
+    donationReceiverUid?: string
     setDonationCount: Function
     handleShowDonationAlert: Function
     toggleDonationForm: Function
@@ -40,7 +40,7 @@ export default function DonationForm(props: DonationFormProps) {
     } = useForm<Inputs>()
 
     const {
-        donationReceiverId,
+        donationReceiverUid,
         setDonationCount,
         handleShowDonationAlert,
         toggleDonationForm
@@ -52,7 +52,7 @@ export default function DonationForm(props: DonationFormProps) {
         const requestData = {
             ...data,
             value: parseInt(data.value.toString()),
-            donationReceiverId
+            donationReceiverUid
         }
 
 

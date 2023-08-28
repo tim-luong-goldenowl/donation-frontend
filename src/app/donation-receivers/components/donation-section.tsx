@@ -106,7 +106,7 @@ export default function DonationSection(props: DonationSectionProps) {
             {
                 showDonationForm && (
                     <div className={styles.donationForm}>
-                        <DonationForm handleShowDonationAlert={handleShowDonationAlert} toggleDonationForm={toggleDonationForm} donationReceiverId={donationReceiver.id} setDonationCount={setDonationCount} />
+                        <DonationForm handleShowDonationAlert={handleShowDonationAlert} toggleDonationForm={toggleDonationForm} donationReceiverUid={donationReceiver.uid} setDonationCount={setDonationCount} />
                     </div>
                 )
             }

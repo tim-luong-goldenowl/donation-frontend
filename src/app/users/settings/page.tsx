@@ -21,10 +21,10 @@ export default function Page() {
 
   useEffect(() => {
     getRequest('/users/profiles')
-      .then(({ user, donationReceiver }) => {
-        setUser(user)
-        if (donationReceiver) {
-          setDonationReceiver(donationReceiver)
+      .then(({ userProfile, donationReceiverProfile }) => {
+        setUser(userProfile)
+        if (donationReceiverProfile) {
+          setDonationReceiver(donationReceiverProfile)
           setHasDonationReceiver(true)
         }
         setShowDobPicker(true)

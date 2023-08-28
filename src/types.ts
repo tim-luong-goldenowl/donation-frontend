@@ -1,5 +1,5 @@
 export type UserType = {
-    id?: number
+    uid?: string
     firstName?: string
     lastName?: string
     email?: string
@@ -9,7 +9,7 @@ export type UserType = {
 }
 
 export type DonationReceiverType = {
-    id?: number
+    uid?: string
     email?: string
     businessName?: string
     companyName?: string
